@@ -1,3 +1,27 @@
+/*
+MIT License
+
+Copyright (c) 2022 Thomas Maier
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+ */
+
 class YapaConfig {
     constructor() {
         // general
@@ -18,10 +42,11 @@ class YapaConfig {
 
         // transmissions
         this.transmissionsEnabled = true;
-        this.trasmissionSpawnPeriodMaxMs = 10000;
-        this.transmissionSpeed = 2.0
-        this.trasmissionColorA = "#FF0000"
-        this.trasmissionColorB = "#0000FF"
+        this.trasmissionSpawnPeriodMaxMs = 1000;
+        this.transmissionSpeedFactor = 1.0;
+        this.trasmissionColorA = "#FF0000";
+        this.trasmissionColorB = "#0000FF";
+        this.transmissionsDrawPackets = true;
     }
 }
 
@@ -74,8 +99,14 @@ class Yapa {
             for (const transmission of this.transmissions) {
                 for (const section of transmission.sections) {
                     if (section[2] < 100) {
-                        const distance = this.nodes[section[0]].squaredDistanceTo(this.nodes[section[1]]);
-                        section[2] += (distance / this.squaredMaxConnDistance) * this.conf.transmissionSpeed;
+                        transmission.current = section;
+                        const squaredDistance = this.nodes[section[0]].squaredDistanceTo(this.nodes[section[1]]);
+                        const distance = Math.sqrt(squaredDistance);
+                        // normalize speed
+                        section[2] += ((this.conf.transmissionSpeedFactor * this.conf.maxConnDistance) / distance) * this.pixelRatio;
+                        if(section[2] > 100) {
+                            section[2] = 100;
+                        }
                         break
                     }
                 }
@@ -92,6 +123,9 @@ class Yapa {
             this.drawNodes();
             if (this.conf.connsEnabled) {
                 this.drawConns();
+            }
+            if (this.conf.transmissionsEnabled) {
+                this.drawTransmissions();
             }
         }
         window.requestAnimationFrame(this.draw.bind(this));
@@ -124,6 +158,27 @@ class Yapa {
                 this.ctx.lineTo(b.x, b.y);
                 this.ctx.stroke();
             }
+        }
+    }
+
+    drawTransmissions() {
+        /*WiP*/
+        this.ctx.globalAlpha = this.fadeInAlpha;
+        for (const transmission of this.transmissions) {
+            this.ctx.fillStyle = transmission.color;
+            let edgepos = [
+                (this.nodes[transmission.current[1]].x - this.nodes[transmission.current[0]].x) * transmission.current[2] * 0.01,
+                (this.nodes[transmission.current[1]].y - this.nodes[transmission.current[0]].y) * transmission.current[2] * 0.01
+            ];
+            this.ctx.beginPath();
+            this.ctx.arc(
+                edgepos[0] + this.nodes[transmission.current[0]].x,
+                edgepos[1] + this.nodes[transmission.current[0]].y,
+                this.conf.nodeRadius * 2 * this.pixelRatio,
+                0,
+                2 * Math.PI
+            );
+            this.ctx.fill()
         }
     }
 
@@ -285,6 +340,7 @@ class YapaTransmission {
             // [from, to, progress]
             this.sections.push([path[i - 1], path[i], 0]);
         }
+        this.current = this.sections[0];
         this.color = color;
     }
 }
