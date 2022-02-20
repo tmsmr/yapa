@@ -11,18 +11,25 @@
             background-color: #222;
         }
 
-        #yapa-container {
-            width: 100%;
-            height: 100%;
+        #yapa-container-1 {
+            width: 40%;
+            height: 80%;
+        }
+        #yapa-container-2 {
+            width: 40%;
+            height: 80%;
         }
     </style>
     <script src="yapa.js"></script>
 </head>
 <body>
-<div id="yapa-container">
+<div id="yapa-container-1">
+</div>
+<div id="yapa-container-2">
 </div>
 </body>
 <script type="text/javascript">
-    new Yapa(document.getElementById("yapa-container"), new YapaConfig()).start();
+    new Yapa(document.getElementById("yapa-container-1"), new YapaConfig()).start();
+    new Yapa(document.getElementById("yapa-container-2"), new YapaConfig()).start();
 </script>
 </html>
