@@ -42,10 +42,11 @@ class YapaConfig {
 
         // transmissions
         this.transmissionsEnabled = true;
-        this.trasmissionSpawnPeriodMaxMs = 1000;
+        this.transmissionSpawnPeriodMaxMs = 1000;
         this.transmissionSpeedFactor = 1.0;
         this.trasmissionColorA = "#FF0000";
         this.trasmissionColorB = "#0000FF";
+        this.transmissionWidthFactor = 1.2;
         this.transmissionsDrawPackets = true;
     }
 }
@@ -104,7 +105,7 @@ class Yapa {
                         const distance = Math.sqrt(squaredDistance);
                         // normalize speed
                         section[2] += ((this.conf.transmissionSpeedFactor * this.conf.maxConnDistance) / distance) * this.pixelRatio;
-                        if(section[2] > 100) {
+                        if (section[2] > 100) {
                             section[2] = 100;
                         }
                         break
@@ -162,23 +163,59 @@ class Yapa {
     }
 
     drawTransmissions() {
-        /*WiP*/
-        this.ctx.globalAlpha = this.fadeInAlpha;
+        this.ctx.lineWidth = this.conf.connLineWidth * this.pixelRatio * this.conf.transmissionWidthFactor;
         for (const transmission of this.transmissions) {
+            this.ctx.strokeStyle = transmission.color;
             this.ctx.fillStyle = transmission.color;
-            let edgepos = [
-                (this.nodes[transmission.current[1]].x - this.nodes[transmission.current[0]].x) * transmission.current[2] * 0.01,
-                (this.nodes[transmission.current[1]].y - this.nodes[transmission.current[0]].y) * transmission.current[2] * 0.01
-            ];
-            this.ctx.beginPath();
-            this.ctx.arc(
-                edgepos[0] + this.nodes[transmission.current[0]].x,
-                edgepos[1] + this.nodes[transmission.current[0]].y,
-                this.conf.nodeRadius * 2 * this.pixelRatio,
-                0,
-                2 * Math.PI
-            );
-            this.ctx.fill()
+            let alpha = 1.0
+            if (transmission.sections.length === 1) {
+                alpha = 1 - (Math.abs((transmission.sections[0][2] - 50)) * 2) / 100
+            } else {
+                // first section
+                if (transmission.sections[0][2] < 100) {
+                    alpha = transmission.sections[0][2] / 100;
+                }
+                // last section
+                if (transmission.sections[transmission.sections.length - 1][2] > 0) {
+                    alpha = 1 - transmission.sections[transmission.sections.length - 1][2] / 100;
+                }
+            }
+            // draw the transmission's path
+            for (const section of transmission.sections) {
+                const a = this.nodes[section[0]]
+                const b = this.nodes[section[1]]
+                // make the distance less important for active transmissions
+                this.ctx.globalAlpha = ((((1 - a.squaredDistanceTo(b) / this.squaredMaxConnDistance)) + 1) / 2) * this.fadeInAlpha * alpha;
+                this.ctx.beginPath();
+                this.ctx.moveTo(a.x, a.y);
+                this.ctx.lineTo(b.x, b.y);
+                this.ctx.stroke();
+            }
+            this.ctx.globalAlpha = this.fadeInAlpha * alpha;
+            // draw start and end of the transmission
+            const startNode = this.nodes[transmission.sections[0][0]];
+            const endNode = this.nodes[transmission.sections[transmission.sections.length - 1][1]];
+            for (const node of [startNode, endNode]) {
+                this.ctx.beginPath();
+                this.ctx.arc(node.x, node.y, this.conf.nodeRadius * this.conf.transmissionWidthFactor * this.pixelRatio, 0, 2 * Math.PI);
+                this.ctx.fill();
+            }
+            if (this.conf.transmissionsDrawPackets) {
+                // draw packets
+                let edgepos = [
+                    (this.nodes[transmission.current[1]].x - this.nodes[transmission.current[0]].x) * transmission.current[2] * 0.01,
+                    (this.nodes[transmission.current[1]].y - this.nodes[transmission.current[0]].y) * transmission.current[2] * 0.01
+                ];
+                this.ctx.beginPath();
+                this.ctx.arc(
+                    edgepos[0] + this.nodes[transmission.current[0]].x,
+                    edgepos[1] + this.nodes[transmission.current[0]].y,
+                    this.conf.nodeRadius * this.conf.transmissionWidthFactor * this.pixelRatio,
+                    0,
+                    2 * Math.PI
+                );
+                this.ctx.fill()
+            }
         }
     }
 
@@ -197,7 +234,7 @@ class Yapa {
                 }
             }
         }
-        setTimeout(this.startTransmission.bind(this), Math.random() * this.conf.trasmissionSpawnPeriodMaxMs);
+        setTimeout(this.startTransmission.bind(this), Math.random() * this.conf.transmissionSpawnPeriodMaxMs);
     }
 
     /*
