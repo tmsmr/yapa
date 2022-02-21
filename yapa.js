@@ -44,7 +44,7 @@ class YapaConfig {
         this.transmissionsEnabled = true;
         this.transmissionSpawnPeriodMaxMs = 1000;
         this.transmissionSpeedFactor = 1.0;
-        this.trasmissionColorA = "#FF0000";
+        this.trasmissionColorA = "#00FF00";
         this.trasmissionColorB = "#0000FF";
         this.transmissionWidthFactor = 1.25;
         this.transmissionsDrawPackets = true;
