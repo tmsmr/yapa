@@ -46,7 +46,7 @@ class YapaConfig {
         this.transmissionSpeedFactor = 1.0;
         this.trasmissionColorA = "#FF0000";
         this.trasmissionColorB = "#0000FF";
-        this.transmissionWidthFactor = 1.2;
+        this.transmissionWidthFactor = 1.25;
         this.transmissionsDrawPackets = true;
     }
 }
@@ -192,12 +192,25 @@ class Yapa {
                 this.ctx.stroke();
             }
             this.ctx.globalAlpha = this.fadeInAlpha * alpha;
-            // draw start and end of the transmission
-            const startNode = this.nodes[transmission.sections[0][0]];
-            const endNode = this.nodes[transmission.sections[transmission.sections.length - 1][1]];
-            for (const node of [startNode, endNode]) {
+            // draw start node
+            this.ctx.beginPath();
+            this.ctx.arc(
+                this.nodes[transmission.sections[0][0]].x,
+                this.nodes[transmission.sections[0][0]].y,
+                this.conf.nodeRadius * this.pixelRatio * this.conf.transmissionWidthFactor,
+                0,
+                2 * Math.PI
+            );
+            this.ctx.fill();
+            // draw the remaining nodes of the transmission
+            for (const i in transmission.sections) {
+                const node = this.nodes[transmission.sections[i][1]];
+                let radius = this.conf.nodeRadius * this.pixelRatio;
+                if (i === transmission.sections.length - 1) {
+                    radius *= this.conf.transmissionWidthFactor;
+                }
                 this.ctx.beginPath();
-                this.ctx.arc(node.x, node.y, this.conf.nodeRadius * this.conf.transmissionWidthFactor * this.pixelRatio, 0, 2 * Math.PI);
+                this.ctx.arc(node.x, node.y, radius, 0, 2 * Math.PI);
                 this.ctx.fill();
             }
             if (this.conf.transmissionsDrawPackets) {
