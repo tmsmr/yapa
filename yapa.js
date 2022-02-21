@@ -79,7 +79,7 @@ class Yapa {
         const area = [this.canvas.width, this.canvas.height];
         let nodeCount = Math.floor(((this.container.clientWidth * this.container.clientHeight) / (100 * 100)) * this.conf.nodeDensityFactor);
         while (nodeCount--) {
-            nodes.push(new YapaNode(area, this.conf.nodeVelocityFactor * this.pixelRatio));
+            nodes.push(new YapaNode(area, this.conf.nodeVelocityFactor * this.pixelRatio, this.conf.nodeRadius * this.conf.transmissionWidthFactor));
         }
         this.nodes = nodes;
     }
@@ -339,20 +339,23 @@ class Yapa {
 }
 
 class YapaNode {
-    constructor(area, nodeVelocityFactor) {
+    constructor(area, nodeVelocityFactor, padding) {
         this.area = area;
-        this.x = Math.floor(Math.random() * this.area[0]);
-        this.y = Math.floor(Math.random() * this.area[1]);
+        this.x = Math.floor(Math.random() * (this.area[0] - padding));
+        if (this.x < padding) this.x = padding;
+        this.y = Math.floor(Math.random() * (this.area[1] - padding));
+        if (this.y < padding) this.y = padding;
         this.dx = (Math.random() - 0.5) * nodeVelocityFactor;
         this.dy = (Math.random() - 0.5) * nodeVelocityFactor;
+        this.padding = padding;
         this.visited = undefined;
         this.distance = undefined;
         this.parent = undefined;
     }
 
     update() {
-        if (this.x + this.dx > this.area[0] || this.x + this.dx < 0) this.dx = -this.dx;
-        if (this.y + this.dy > this.area[1] || this.y + this.dy < 0) this.dy = -this.dy;
+        if (this.x + this.dx + this.padding > this.area[0] || this.x + this.dx - this.padding < 0) this.dx = -this.dx;
+        if (this.y + this.dy + this.padding > this.area[1] || this.y + this.dy - this.padding < 0) this.dy = -this.dy;
         this.x += this.dx;
         this.y += this.dy;
     }
