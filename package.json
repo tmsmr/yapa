@@ -1,0 +1,22 @@
+{
+  "name": "@tmsmr/yapa",
+  "version": "0.9.0",
+  "description": "Yet another particle animation",
+  "main": "yapa.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tmsmr/yapa.git"
+  },
+  "author": "Thomas Maier",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tmsmr/yapa/issues"
+  },
+  "homepage": "https://github.com/tmsmr/yapa",
+  "publishConfig": {
+    "@tmsmr:registry": "https://npm.pkg.github.com"
+  }
+}
