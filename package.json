@@ -18,5 +18,8 @@
   "homepage": "https://github.com/tmsmr/yapa",
   "publishConfig": {
     "@tmsmr:registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "uglify-js": "^3.15.1"
   }
 }
