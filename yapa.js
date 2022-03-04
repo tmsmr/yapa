@@ -60,6 +60,11 @@ class Yapa {
         this.conf = conf;
     }
 
+    updateConfig(conf) {
+        console.log(conf);
+        this.conf = conf;
+    }
+
     reset() {
         this.pixelRatio = window.devicePixelRatio || 1;
         this.canvas.width = this.container.clientWidth * this.pixelRatio;
@@ -233,7 +238,7 @@ class Yapa {
     }
 
     startTransmission() {
-        if (!document.hidden) {
+        if (!document.hidden && this.conf.transmissionsEnabled) {
             if (this.nodes.length >= 2) {
                 const ai = Math.floor(Math.random() * this.nodes.length);
                 let bi = ai;
@@ -343,9 +348,7 @@ class Yapa {
     start() {
         this.reset();
         this.tick();
-        if (this.conf.transmissionsEnabled) {
-            this.startTransmission();
-        }
+        this.startTransmission();
         this.draw();
         window.addEventListener("resize", this.reset.bind(this));
     }
