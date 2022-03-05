@@ -61,7 +61,6 @@ class Yapa {
     }
 
     updateConfig(conf) {
-        console.log(conf);
         this.conf = conf;
     }
 
