@@ -1,0 +1,80 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #222222;
+}
+
+body.light {
+    color: #333;
+}
+
+body.dark {
+    color: #DDD;
+}
+
+#title {
+    width: 1200px;
+}
+
+#configurator {
+    width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#config {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#codegen {
+    width: 1200px;
+    margin-top: 40px;
+}
+
+#generated {
+    border: 10px solid #2E3441;
+    border-radius: 10px;
+    font-size: larger;
+}
+
+div.configvalue {
+    margin: 6px;
+}
+
+div.config_checkbox {
+    margin-left: 10px;
+}
+
+#yapa {
+    padding: 25px;
+    width: 80%;
+    height: 650px;
+}
+
+input[type="color"] {
+    width: 20px;
+    height: 20px;
+    visibility: hidden;
+}
+
+span.colorinput {
+    border: 2px solid;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-left: 10px;
+}
+
+input[type="range"] {
+    width: 100px;
+    margin-right: 10px;
+}
