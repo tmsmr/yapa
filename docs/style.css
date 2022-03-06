@@ -3,7 +3,7 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: 'Open Sans', sans-serif;
-    background-color: #222222;
+    background-color: #222;
 }
 
 body.light {
@@ -15,25 +15,26 @@ body.dark {
 }
 
 #title {
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
 }
 
 #configurator {
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
     display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 #config {
-    width: 20%;
+    min-width: 200px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
 }
 
 #codegen {
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
     margin-top: 40px;
 }
 
@@ -52,8 +53,8 @@ div.config_checkbox {
 }
 
 #yapa {
+    width: 75%;
     padding: 25px;
-    width: 80%;
     height: 650px;
 }
 
@@ -70,7 +71,6 @@ span.colorinput {
 }
 
 input[type="checkbox"] {
-    transform: scale(1.5);
     margin-left: 10px;
 }
 
