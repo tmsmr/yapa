@@ -153,7 +153,7 @@ document.getElementById("codegen_active").addEventListener("change", evt => {
 function updateConfigCode() {
     const gen = [];
     gen.push("&lt;div id=\"yapa\"&gt;&lt;/div&gt;");
-    gen.push("&lt;script src=\"https://tmsmr.github.io/yapa/versions/yapa-0.9.0.js\"\n        integrity=\"sha384-AFn1hF2ZD8nrdct36hqTtB3/z8dJZF6UEVvrC5KEvrEzsv7Kebpa7+u7qSSQu0a6\"\n&gt;&lt;/script&gt;")
+    gen.push("&lt;script src=\"https://tmsmr.github.io/yapa/versions/yapa-0.9.0.js\"\n\tintegrity=\"sha384-AFn1hF2ZD8nrdct36hqTtB3/z8dJZF6UEVvrC5KEvrEzsv7Kebpa7+u7qSSQu0a6\"\n\tcrossorigin=\"anonymous\"\n&gt;&lt;/script&gt;")
     gen.push("&lt;script type=\"text/javascript\"&gt;");
     gen.push("\tconst conf = new YapaConfig();")
     for (let key of Object.keys(config)) {
