@@ -1,3 +1,5 @@
+/* Copy paste galore, i'll definitely build this properly some day... */
+
 const config = new YapaConfig();
 const yapa = new Yapa(document.getElementById("yapa"), config);
 
