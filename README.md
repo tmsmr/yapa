@@ -1,7 +1,7 @@
 # yapa.js
 *Yet another particle animation*
 
-*https://thomas-maier.net/yapa*
+*https://yapa.tmsmr.de*
 
 ### General
 There are multiple great JS libraries that render (interactive) particle animations in a `<canvas>`. This implementation adds 'Transmissions' to visualize traffic between the particles.
@@ -12,7 +12,7 @@ There are multiple great JS libraries that render (interactive) particle animati
 
 ```html
 <div id="yapa"></div>
-<script src="https://thomas-maier.net/yapa/versions/yapa-0.9.1.js"
+<script src="https://yapa.tmsmr.de/versions/yapa-0.9.1.js"
 	integrity="sha384-mxa2kC7J33fN+0TUBOIi4nAehBtMGrILGkhs2c5BFnmV4qBLA2Qpj1XpIxs7sLH9"
 	crossorigin="anonymous"
 ></script>
@@ -23,4 +23,4 @@ There are multiple great JS libraries that render (interactive) particle animati
 ```
 
 ### Demo / Configuration
-- To see the library in action and/or build a more advanced configuration, check out https://thomas-maier.net/yapa
+- To see the library in action and/or build a more advanced configuration, check out https://yapa.tmsmr.de
