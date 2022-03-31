@@ -3,15 +3,14 @@ body {
     flex-direction: column;
     align-items: center;
     font-family: 'Open Sans', sans-serif;
-    background-color: #222;
 }
 
 body.light {
-    color: #333;
+    color: #333333;
 }
 
 body.dark {
-    color: #DDD;
+    color: #DDDDDD;
 }
 
 #title {

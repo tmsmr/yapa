@@ -32,13 +32,13 @@ class YapaConfig {
         this.nodeDensityFactor = 1.0;
         this.nodeVelocityFactor = 0.4;
         this.nodeRadius = 2.0;
-        this.nodeColor = "#BBB";
+        this.nodeColor = "#BBBBBB";
 
         // connections
         this.connsEnabled = true;
         this.maxConnDistance = 160;
         this.connLineWidth = 1.0;
-        this.connColor = "#888";
+        this.connColor = "#888888";
 
         // transmissions
         this.transmissionsEnabled = true;

@@ -1,5 +1,7 @@
 /* Copy paste galore, i'll definitely build this properly some day... */
 
+const BGCOL = "#222222"
+
 const config = new YapaConfig();
 const yapa = new Yapa(document.getElementById("yapa"), config);
 
@@ -51,7 +53,10 @@ conns_width_ctrl.addEventListener("input", () => {
 });
 
 const bg_color_ctrl = document.getElementById("bg_color");
-bg_color_ctrl.parentElement.style.backgroundColor = document.body.style.backgroundColor;
+bg_color_ctrl.parentElement.style.backgroundColor = BGCOL;
+bg_color_ctrl.value = BGCOL;
+document.body.style.backgroundColor = BGCOL;
+console.log(document.body.style.backgroundColor)
 bg_color_ctrl.addEventListener("input", evt => {
     document.body.style.backgroundColor = evt.target.value;
     evt.target.parentElement.style.backgroundColor = evt.target.value;
@@ -64,6 +69,7 @@ bg_color_ctrl.addEventListener("input", evt => {
 
 const node_color_ctrl = document.getElementById("node_color");
 node_color_ctrl.parentElement.style.backgroundColor = config.nodeColor;
+node_color_ctrl.value = config.nodeColor;
 node_color_ctrl.addEventListener("input", evt => {
     evt.target.parentElement.style.backgroundColor = evt.target.value;
     config.nodeColor = evt.target.value;
@@ -72,6 +78,7 @@ node_color_ctrl.addEventListener("input", evt => {
 
 const conn_color_cntr = document.getElementById("conn_color");
 conn_color_cntr.parentElement.style.backgroundColor = config.connColor;
+conn_color_cntr.value = config.connColor;
 conn_color_cntr.addEventListener("input", evt => {
     evt.target.parentElement.style.backgroundColor = evt.target.value;
     config.connColor = evt.target.value;
@@ -112,6 +119,7 @@ trans_width_crtl.addEventListener("input", () => {
 
 const color_trans_a = document.getElementById("color_trans_a");
 color_trans_a.parentElement.style.backgroundColor = config.trasmissionColorA;
+color_trans_a.value = config.trasmissionColorA
 color_trans_a.addEventListener("input", evt => {
     evt.target.parentElement.style.backgroundColor = evt.target.value;
     config.trasmissionColorA = evt.target.value;
@@ -120,6 +128,7 @@ color_trans_a.addEventListener("input", evt => {
 
 const color_trans_b = document.getElementById("color_trans_b");
 color_trans_b.parentElement.style.backgroundColor = config.trasmissionColorB;
+color_trans_b.value = config.trasmissionColorB;
 color_trans_b.addEventListener("input", evt => {
     evt.target.parentElement.style.backgroundColor = evt.target.value;
     config.trasmissionColorB = evt.target.value;
