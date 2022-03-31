@@ -167,7 +167,7 @@ class Yapa {
         for (const transmission of this.transmissions) {
             this.ctx.strokeStyle = transmission.color;
             this.ctx.fillStyle = transmission.color;
-            let alpha = 1.0
+            let alpha = 1.0 * this.fadeInAlpha;
             if (transmission.sections.length === 1) {
                 alpha = 1 - (Math.abs((transmission.sections[0][2] - 50)) * 2) / 100
             } else {
@@ -185,13 +185,16 @@ class Yapa {
                 const a = this.nodes[section[0]]
                 const b = this.nodes[section[1]]
                 // make the distance less important for active transmissions
-                this.ctx.globalAlpha = ((((1 - a.squaredDistanceTo(b) / this.squaredMaxConnDistance)) + 1) / 2) * this.fadeInAlpha * alpha;
+                let distFactor = 1 - (a.squaredDistanceTo(b) / this.squaredMaxConnDistance);
+                if (distFactor > 1) distFactor = 1;
+                if (distFactor < 0) distFactor = 0;
+                this.ctx.globalAlpha = ((distFactor + 1) / 2) * alpha;
                 this.ctx.beginPath();
                 this.ctx.moveTo(a.x, a.y);
                 this.ctx.lineTo(b.x, b.y);
                 this.ctx.stroke();
             }
-            this.ctx.globalAlpha = this.fadeInAlpha * alpha;
+            this.ctx.globalAlpha = alpha;
             // draw start node
             this.ctx.beginPath();
             this.ctx.arc(
