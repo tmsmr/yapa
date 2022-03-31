@@ -10,7 +10,7 @@ There are multiple great JS libraries that render (interactive) particle animati
 - The library is available as a simple, plain JS file, available at https://github.com/tmsmr/yapa/tree/main/docs/versions
 - To use it, simply define a wrapper element and hand it over to the `Yapa` class. Minimal example:
 
-```
+```html
 <div id="yapa"></div>
 <script src="https://thomas-maier.net/yapa/versions/yapa-0.9.1.js"
 	integrity="sha384-mxa2kC7J33fN+0TUBOIi4nAehBtMGrILGkhs2c5BFnmV4qBLA2Qpj1XpIxs7sLH9"
