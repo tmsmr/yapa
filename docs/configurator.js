@@ -56,7 +56,6 @@ const bg_color_ctrl = document.getElementById("bg_color");
 bg_color_ctrl.parentElement.style.backgroundColor = BGCOL;
 bg_color_ctrl.value = BGCOL;
 document.body.style.backgroundColor = BGCOL;
-console.log(document.body.style.backgroundColor)
 bg_color_ctrl.addEventListener("input", evt => {
     document.body.style.backgroundColor = evt.target.value;
     evt.target.parentElement.style.backgroundColor = evt.target.value;
