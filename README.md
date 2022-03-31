@@ -17,8 +17,7 @@ There are multiple great JS libraries that render (interactive) particle animati
 	crossorigin="anonymous"
 ></script>
 <script type="text/javascript">
-	const yapa = new Yapa(document.getElementById("yapa"), new YapaConfig());
-	yapa.start();
+	new Yapa(document.getElementById("yapa"), new YapaConfig()).start();
 </script>
 ```
 
