@@ -1,17 +1,26 @@
 # yapa.js
 *Yet another particle animation*
 
+*https://thomas-maier.net/yapa*
 
+### General
+There are multiple great JS libraries that render (interactive) particle animations in a `<canvas>`. This implementation adds 'Transmissions' to visualize traffic between the particles.
 
-## WiP
-
-https://tmsmr.github.io/yapa/
+### Usage
+- The library is available as a simple, plain JS file, available at https://github.com/tmsmr/yapa/tree/main/docs/versions
+- To use it, simply define a wrapper element and hand it over to the `Yapa` class. Minimal example:
 
 ```
-./node_modules/uglify-js/bin/uglifyjs --compress --mangle -- yapa.js > yapa.min.js
-shasum -b -a 384 yapa-0.9.0.js | awk '{ print $1 }' | xxd -r -p | base64
+<div id="yapa"></div>
+<script src="https://thomas-maier.net/yapa/versions/yapa-0.9.1.js"
+	integrity="sha384-mxa2kC7J33fN+0TUBOIi4nAehBtMGrILGkhs2c5BFnmV4qBLA2Qpj1XpIxs7sLH9"
+	crossorigin="anonymous"
+></script>
+<script type="text/javascript">
+	const yapa = new Yapa(document.getElementById("yapa"), new YapaConfig());
+	yapa.start();
+</script>
 ```
 
-## TODO
-- smth. is odd with the fading of active connections when they are getting much longer than the configured max distance of normal connections...
-  -> seems like the distance is ignored when the packet is in the last section of the transmission
+### Demo / Configuration
+- To see the library in action and/or build a more advanced configuration, check out https://thomas-maier.net/yapa
